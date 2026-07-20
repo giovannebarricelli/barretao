@@ -9,12 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Psicologia de Cores Aplicada à Conversão */
-            --bg-color: #07090e;     /* Fundo escuro profundo: transmite seriedade, foco absoluto e sofisticação */
-            --card-bg: #141c2c;      /* Ajustado para um tom levemente mais claro para dar contraste */
-            --card-border: #2a364f;  /* Borda mais visível para delimitar os cards */
-            --accent-gold: #f59e0b;       /* Dourado/Amarelo: estimula o cérebro a focar no valor, riqueza e oportunidades */
-            --accent-green: #059669;      /* Verde Esmeralda: gatilho subconsciente de "transação segura", aprovação e dinheiro/economia */
+            --bg-color: #07090e;
+            --card-bg: #141c2c;
+            --card-border: #2a364f;
+            --accent-gold: #f59e0b;
+            --accent-green: #059669;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
         }
@@ -30,7 +29,7 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            padding-bottom: 120px; /* Espaço para o botão flutuador inferior */
+            padding-bottom: 120px;
         }
 
         h1, h2, h3, .price-main, .badge-top, .cash-price {
@@ -167,8 +166,15 @@
             font-weight: 400;
         }
 
-        /* BOTÃO "TESTAR AGORA" EM AMARELO SÓLIDO BEM VIVO */
-        .btn {
+        /* CONTAINER DOS DOIS BOTÕES NO CARD */
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* BOTÃO "TESTAR AGORA" EM AMARELO */
+        .btn-test {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -176,11 +182,11 @@
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: #07090e;
             border: none;
-            padding: 0.95rem 1rem;
+            padding: 0.85rem 1rem;
             border-radius: 50px;
             text-align: center;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -188,9 +194,36 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
 
-        .btn:hover, .btn:active {
+        .btn-test:hover, .btn-test:active {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* BOTÃO "QUERO ESSE MODELO" EM VERDE ESMERALDA */
+        .btn-whatsapp-model {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0.85rem 1rem;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.35);
+        }
+
+        .btn-whatsapp-model:hover, .btn-whatsapp-model:active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
             transform: scale(1.02);
         }
 
@@ -236,7 +269,7 @@
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
         }
 
-        /* JANELA MODAL DE PREÇO (OCULTA POR PADRÃO, ABRE AO CLICAR) */
+        /* JANELA MODAL DE PREÇO */
         .pricing-modal-overlay {
             position: fixed;
             top: 0;
@@ -467,7 +500,10 @@
                     <h3>Gamificação e Trilhagem</h3>
                     <p>Sistema que filtra curioso, trilha quem tem interesse no seu produto e responde as principais dúvidas sobre a sua empresa. O cliente não chega sem saber de nada, sua equipe comercial ganha um tempo enorme, o robô faz o primeiro contato e seu time atende só quem realmente quer comprar.</p>
                 </div>
-                <a href="game.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="game.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%201" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
 
             <!-- Modelo 2 -->
@@ -478,7 +514,10 @@
                     <h3>Cardápio Digital</h3>
                     <p>Você apresenta todos os seus produtos ou serviços em um só lugar. O cliente entra, escolhe o produto e o sistema de atendimento vende sozinho.</p>
                 </div>
-                <a href="modulo2.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="modulo2.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%202" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
 
             <!-- Modelo 3 -->
@@ -489,7 +528,10 @@
                     <h3>Tira-Dúvidas Automático</h3>
                     <p>Seu produto é complexo e tem muitos detalhes? Nós temos um sistema que explica tudo dividido em duas partes (site + robô de atendimento). Sua equipe entra apenas para fechar a venda.</p>
                 </div>
-                <a href="modulo3.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="modulo3.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%203" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
 
             <!-- Modelo 4 -->
@@ -500,7 +542,10 @@
                     <h3>Pré-Vendas e Reservas</h3>
                     <p>Tem muito cliente batendo na porta mas você não tem certeza de quantas pessoas vão até você? Nosso sistema garante um agendamento seguro com reserva feita mediante pagamento para você se preparar e saber exatamente quantas pessoas vai atender.</p>
                 </div>
-                <a href="modulo4.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="modulo4.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%204" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
 
             <!-- Modelo 5 -->
@@ -511,7 +556,10 @@
                     <h3>Fidelização e Retenção</h3>
                     <p>Salva os dados do consumidor e dispara campanhas automatizadas durante os 10 dias de evento, garantindo que ele volte a consumir na sua empresa.</p>
                 </div>
-                <a href="modulo5.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="modulo5.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%205" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
 
             <!-- Modelo 6 -->
@@ -522,7 +570,10 @@
                     <h3>Pesquisa de Mercado</h3>
                     <p>Colete dados estratégicos diretamente do público do evento. Trilha comportamentos e gera relatórios mastigados para otimizar suas vendas e estoque.</p>
                 </div>
-                <a href="modulo6.html" class="btn">Testar Agora ➔</a>
+                <div class="card-actions">
+                    <a href="modulo6.html" class="btn-test">Testar Agora ➔</a>
+                    <a href="https://wa.me/5563935013672?text=Quero%20o%20modelo%206" class="btn-whatsapp-model" target="_blank">Quero esse modelo ➔</a>
+                </div>
             </div>
         </div>
 
@@ -567,7 +618,7 @@
                 </div>
             </div>
 
-            <a href="https://wa.me/5564935013672?text=gostei%20do%20preço" class="btn-fale-conosco" target="_blank">Garantir Minha Vaga ➔</a>
+            <a href="https://wa.me/5563935013672?text=gostei%20do%20preço" class="btn-fale-conosco" target="_blank">Garantir Minha Vaga ➔</a>
         </div>
     </div>
 
