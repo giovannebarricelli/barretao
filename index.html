@@ -123,33 +123,56 @@
         </div>
     </section>
 
-    <!-- SEÇÃO: CONTAGEM REGRESSIVA E EVENTOS -->
+    <!-- SEÇÃO: CONTAGEM REGRESSIVA E EVENTOS (COM CARROSSEL NO MOBILE) -->
     <section class="py-20 px-4 bg-[#E31D1D] text-white text-center">
         <h2 class="text-3xl md:text-5xl font-black uppercase mb-8">Nosso tempo está correndo...</h2>
         <div id="timer" class="text-5xl md:text-7xl font-black tracking-tighter mb-10">00:00:00:00</div>
         
         <h3 class="text-2xl font-bold mb-8 uppercase">Eventos nacionais que estamos presentes:</h3>
         
-        <!-- Galeria adaptada: scroll horizontal fluido 9:16 no mobile e grade no PC -->
-        <div class="max-w-6xl mx-auto flex md:grid md:grid-cols-5 gap-4 mb-12 overflow-x-auto pb-4 px-2 snap-x scrollbar-none">
-            <div class="min-w-[200px] md:min-w-0 snap-center flex-shrink-0 overflow-hidden rounded-2xl aspect-[9/16] md:h-96 border-4 border-white/20 shadow-lg relative">
-                <img src="caldas-country.jpg" alt="Caldas Country" class="w-full h-full object-cover">
+        <!-- No mobile vira carrossel de 1 por vez; no PC vira grade completa de 5 colunas -->
+        <div class="max-w-6xl mx-auto">
+            <!-- Container do Carrossel Mobile -->
+            <div class="relative md:hidden max-w-[280px] mx-auto mb-6">
+                <div id="carousel-track" class="overflow-hidden rounded-2xl border-4 border-white/20 shadow-2xl bg-black h-[450px] relative">
+                    <!-- Card 1 -->
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-300">
+                        <img src="caldas-country.jpg" alt="Caldas Country" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-300 hidden">
+                        <img src="carnaval-salvador.jpg" alt="Carnaval Salvador" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-300 hidden">
+                        <img src="lollapalooza.jpg" alt="Lollapalooza" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-300 hidden">
+                        <img src="parintins.jpg" alt="Festival de Parintins" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Card 5 -->
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-300 hidden">
+                        <img src="rock-in-rio.jpg" alt="Rock in Rio" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Botões de Navegação do Carrossel -->
+                <button onclick="prevSlide()" class="absolute left-[-20px] top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full font-bold text-xl flex items-center justify-center border border-white/30 shadow-lg z-10">‹</button>
+                <button onclick="nextSlide()" class="absolute right-[-20px] top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full font-bold text-xl flex items-center justify-center border border-white/30 shadow-lg z-10">›</button>
             </div>
-            <div class="min-w-[200px] md:min-w-0 snap-center flex-shrink-0 overflow-hidden rounded-2xl aspect-[9/16] md:h-96 border-4 border-white/20 shadow-lg relative">
-                <img src="carnaval-salvador.jpg" alt="Carnaval Salvador" class="w-full h-full object-cover">
-            </div>
-            <div class="min-w-[200px] md:min-w-0 snap-center flex-shrink-0 overflow-hidden rounded-2xl aspect-[9/16] md:h-96 border-4 border-white/20 shadow-lg relative">
-                <img src="lollapalooza.jpg" alt="Lollapalooza" class="w-full h-full object-cover">
-            </div>
-            <div class="min-w-[200px] md:min-w-0 snap-center flex-shrink-0 overflow-hidden rounded-2xl aspect-[9/16] md:h-96 border-4 border-white/20 shadow-lg relative">
-                <img src="parintins.jpg" alt="Festival de Parintins" class="w-full h-full object-cover">
-            </div>
-            <div class="min-w-[200px] md:min-w-0 snap-center flex-shrink-0 overflow-hidden rounded-2xl aspect-[9/16] md:h-96 border-4 border-white/20 shadow-lg relative">
-                <img src="rock-in-rio.jpg" alt="Rock in Rio" class="w-full h-full object-cover">
+
+            <!-- Grade padrão para Computador (Desktop) -->
+            <div class="hidden md:grid md:grid-cols-5 gap-4 mb-12">
+                <div class="overflow-hidden rounded-2xl h-96 border-4 border-white/20 shadow-lg relative bg-black"><img src="caldas-country.jpg" alt="Caldas Country" class="w-full h-full object-cover"></div>
+                <div class="overflow-hidden rounded-2xl h-96 border-4 border-white/20 shadow-lg relative bg-black"><img src="carnaval-salvador.jpg" alt="Carnaval Salvador" class="w-full h-full object-cover"></div>
+                <div class="overflow-hidden rounded-2xl h-96 border-4 border-white/20 shadow-lg relative bg-black"><img src="lollapalooza.jpg" alt="Lollapalooza" class="w-full h-full object-cover"></div>
+                <div class="overflow-hidden rounded-2xl h-96 border-4 border-white/20 shadow-lg relative bg-black"><img src="parintins.jpg" alt="Festival de Parintins" class="w-full h-full object-cover"></div>
+                <div class="overflow-hidden rounded-2xl h-96 border-4 border-white/20 shadow-lg relative bg-black"><img src="rock-in-rio.jpg" alt="Rock in Rio" class="w-full h-full object-cover"></div>
             </div>
         </div>
 
-        <a href="exemplo.html" class="inline-block bg-white text-[#E31D1D] px-8 py-3 rounded-full font-bold text-sm uppercase hover:bg-gray-100 transition shadow-lg">Ver modelos no catálogo</a>
+        <a href="exemplo.html" class="inline-block bg-white text-[#E31D1D] px-8 py-3 rounded-full font-bold text-sm uppercase hover:bg-gray-100 transition shadow-lg mt-4">Ver modelos no catálogo</a>
     </section>
 
     <!-- RODAPÉ PROFISSIONAL -->
@@ -202,6 +225,30 @@
         }
         setInterval(updateTimer, 1000);
         updateTimer();
+
+        // Lógica do Carrossel Mobile
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('hidden');
+                } else {
+                    slide.classList.add('hidden');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
 
         let answers = {};
         function saveAndNext(current, next, val) {
