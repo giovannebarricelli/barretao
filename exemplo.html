@@ -10,9 +10,9 @@
     <style>
         :root {
             /* Psicologia de Cores Aplicada à Conversão */
-            --bg-color: #07090e;         /* Fundo escuro profundo: transmite seriedade, foco absoluto e sofisticação */
-            --card-bg: #0f141d;
-            --card-border: #1a2230;
+            --bg-color: #07090e;     /* Fundo escuro profundo: transmite seriedade, foco absoluto e sofisticação */
+            --card-bg: #141c2c;      /* Ajustado para um tom levemente mais claro para dar contraste */
+            --card-border: #2a364f;  /* Borda mais visível para delimitar os cards */
             --accent-gold: #f59e0b;       /* Dourado/Amarelo: estimula o cérebro a focar no valor, riqueza e oportunidades */
             --accent-green: #059669;      /* Verde Esmeralda: gatilho subconsciente de "transação segura", aprovação e dinheiro/economia */
             --text-main: #f3f4f6;
@@ -96,7 +96,7 @@
         }
 
         .card {
-            background: linear-gradient(180deg, #1e293b 0%, var(--card-bg) 100%);
+            background: linear-gradient(180deg, #1d283c 0%, var(--card-bg) 100%);
             border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 2.5rem;
@@ -106,7 +106,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .card::before {
@@ -116,18 +116,14 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: transparent;
+            background: var(--accent-gold);
             transition: background 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-6px);
-            border-color: rgba(245, 158, 11, 0.5);
-            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
-        }
-
-        .card:hover::before {
-            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
         }
 
         .card-number {
@@ -137,7 +133,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 3.5rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.05);
             pointer-events: none;
         }
 
@@ -145,7 +141,7 @@
             display: inline-block;
             font-size: 0.75rem;
             color: #f87171;
-            background: rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.15);
             padding: 0.3rem 0.7rem;
             border-radius: 6px;
             text-transform: uppercase;
@@ -164,37 +160,38 @@
         }
 
         .card-content p {
-            color: var(--text-muted);
+            color: #d1d5db;
             font-size: 0.95rem;
             margin-bottom: 2rem;
             line-height: 1.6;
-            font-weight: 300;
+            font-weight: 400;
         }
 
+        /* BOTÃO "TESTAR AGORA" EM AMARELO SÓLIDO BEM VIVO */
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            background-color: transparent;
-            color: var(--accent-gold);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            padding: 0.9rem 1rem;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #07090e;
+            border: none;
+            padding: 0.95rem 1rem;
             border-radius: 50px;
             text-align: center;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 0.9rem;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
 
-        .btn:hover {
-            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
-            color: #07090e;
-            border-color: transparent;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+        .btn:hover, .btn:active {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+            transform: scale(1.02);
         }
 
         /* BOTÃO FLUTUANTE INFERIOR ("VER PREÇO") */
@@ -342,7 +339,6 @@
             gap: 1rem;
         }
 
-        /* Bloco PIX na Janela */
         .cash-option-box {
             background: rgba(5, 150, 105, 0.1);
             border: 1px solid rgba(5, 150, 105, 0.3);
@@ -368,7 +364,6 @@
             color: #ffffff;
         }
 
-        /* Bloco Parcelado na Janela */
         .price-anchor-group {
             text-align: right;
             width: 100%;
@@ -431,7 +426,7 @@
 
         footer {
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 3.0rem;
             color: var(--text-muted);
             font-size: 0.8rem;
             border-top: 1px solid var(--card-border);
@@ -472,7 +467,7 @@
                     <h3>Gamificação e Trilhagem</h3>
                     <p>Sistema que filtra curioso, trilha quem tem interesse no seu produto e responde as principais dúvidas sobre a sua empresa. O cliente não chega sem saber de nada, sua equipe comercial ganha um tempo enorme, o robô faz o primeiro contato e seu time atende só quem realmente quer comprar.</p>
                 </div>
-                <a href="game.html" class="btn">Testar Agora</a>
+                <a href="game.html" class="btn">Testar Agora ➔</a>
             </div>
 
             <!-- Modelo 2 -->
@@ -483,7 +478,7 @@
                     <h3>Cardápio Digital</h3>
                     <p>Você apresenta todos os seus produtos ou serviços em um só lugar. O cliente entra, escolhe o produto e o sistema de atendimento vende sozinho.</p>
                 </div>
-                <a href="modulo2.html" class="btn">Testar Agora</a>
+                <a href="modulo2.html" class="btn">Testar Agora ➔</a>
             </div>
 
             <!-- Modelo 3 -->
@@ -494,7 +489,7 @@
                     <h3>Tira-Dúvidas Automático</h3>
                     <p>Seu produto é complexo e tem muitos detalhes? Nós temos um sistema que explica tudo dividido em duas partes (site + robô de atendimento). Sua equipe entra apenas para fechar a venda.</p>
                 </div>
-                <a href="modulo3.html" class="btn">Testar Agora</a>
+                <a href="modulo3.html" class="btn">Testar Agora ➔</a>
             </div>
 
             <!-- Modelo 4 -->
@@ -505,7 +500,7 @@
                     <h3>Pré-Vendas e Reservas</h3>
                     <p>Tem muito cliente batendo na porta mas você não tem certeza de quantas pessoas vão até você? Nosso sistema garante um agendamento seguro com reserva feita mediante pagamento para você se preparar e saber exatamente quantas pessoas vai atender.</p>
                 </div>
-                <a href="modulo4.html" class="btn">Testar Agora</a>
+                <a href="modulo4.html" class="btn">Testar Agora ➔</a>
             </div>
 
             <!-- Modelo 5 -->
@@ -516,7 +511,7 @@
                     <h3>Fidelização e Retenção</h3>
                     <p>Salva os dados do consumidor e dispara campanhas automatizadas durante os 10 dias de evento, garantindo que ele volte a consumir na sua empresa.</p>
                 </div>
-                <a href="modulo5.html" class="btn">Testar Agora</a>
+                <a href="modulo5.html" class="btn">Testar Agora ➔</a>
             </div>
 
             <!-- Modelo 6 -->
@@ -527,7 +522,7 @@
                     <h3>Pesquisa de Mercado</h3>
                     <p>Colete dados estratégicos diretamente do público do evento. Trilha comportamentos e gera relatórios mastigados para otimizar suas vendas e estoque.</p>
                 </div>
-                <a href="modulo6.html" class="btn">Testar Agora</a>
+                <a href="modulo6.html" class="btn">Testar Agora ➔</a>
             </div>
         </div>
 
@@ -543,7 +538,7 @@
         </button>
     </div>
 
-    <!-- JANELA MODAL DE PREÇO (ABRE AO CLICAR NO BOTÃO) -->
+    <!-- JANELA MODAL DE PREÇO -->
     <div class="pricing-modal-overlay" id="pricingModal">
         <div class="pricing-modal-card">
             <button class="btn-close-modal" id="closeModalBtn">&times;</button>
@@ -554,7 +549,6 @@
             </div>
             
             <div class="modal-pricing-body">
-                <!-- Caixa de Pix / À Vista (Verde: senso de economia e transação segura) -->
                 <div class="modal-tier-box">
                     <div class="cash-option-box">
                         <span class="cash-label">PIX / À Vista (Economia Imediata)</span>
@@ -562,7 +556,6 @@
                     </div>
                 </div>
 
-                <!-- Caixa Parcelada (Dourado: clareza e acessibilidade cognitiva) -->
                 <div class="modal-tier-box">
                     <div class="price-anchor-group">
                         <div class="installment-wrapper">
@@ -574,12 +567,10 @@
                 </div>
             </div>
 
-            <!-- Botão de Ação -->
             <a href="https://wa.me/5564935013672?text=gostei%20do%20preço" class="btn-fale-conosco" target="_blank">Garantir Minha Vaga ➔</a>
         </div>
     </div>
 
-    <!-- SCRIPT PARA ABRIR E FECHAR A JANELA DE PREÇO -->
     <script>
         const openBtn = document.getElementById('openPricingBtn');
         const closeBtn = document.getElementById('closeModalBtn');
@@ -593,7 +584,6 @@
             modal.classList.remove('active');
         });
 
-        // Fecha também se o usuário clicar fora do card do modal
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
