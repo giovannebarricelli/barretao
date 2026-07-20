@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Exclusivo | Alta Gastronomia em Pão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fundo-obsidiana: #050508;
+            --superficie-vidro: rgba(18, 20, 28, 0.85);
+            --borda-ouro: rgba(212, 175, 55, 0.3);
+            --ouro-primario: #d4af37;
+            --ouro-claro: #fff1b0;
+            --gradiente-ouro: linear-gradient(135deg, #f3e5ab 0%, #d4af37 40%, #aa820a 100%);
+            --texto-principal: #f8fafc;
+            --texto-suave: #94a3b8;
+            --verde-whatsapp: #25d366;
+            --verde-whatsapp-hover: #1ebe57;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--fundo-obsidiana);
+            color: var(--texto-principal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            padding: 3rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 5%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(170, 130, 10, 0.04) 0%, transparent 40%);
+        }
+
+        .envelope {
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .selo-diamante {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border: 1px solid var(--borda-ouro);
+            color: var(--ouro-claro);
+            padding: 0.5rem 1.4rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+
+        header h1 span {
+            background: var(--gradiente-ouro);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 15px rgba(212, 175, 55, 0.3));
+        }
+
+        header p {
+            color: var(--texto-suave);
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .catalogo-grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .produto-cartao {
+            background: var(--superficie-vidro);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--borda-ouro);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .produto-cartao:hover {
+            transform: translateY(-8px);
+            border-color: var(--ouro-primario);
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+
+        .produto-imagem-container {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--borda-ouro);
+        }
+
+        .produto-imagem-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .produto-cartao:hover .produto-imagem-container img {
+            transform: scale(1.08);
+        }
+
+        .produto-etiqueta {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(5, 5, 8, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--borda-ouro);
+            color: var(--ouro-claro);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .produto-conteudo {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .produto-titulo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .produto-ingredientes {
+            font-size: 0.9rem;
+            color: var(--texto-suave);
+            line-height: 1.5;
+            margin-bottom: 1.75rem;
+            flex-grow: 1;
+        }
+
+        .produto-rodape {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .produto-preco {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradiente-ouro);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .botao-whatsapp {
+            background-color: var(--verde-whatsapp);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 0.75rem 1.25rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .botao-whatsapp:hover {
+            background-color: var(--verde-whatsapp-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .botao-whatsapp svg {
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--texto-suave);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            background: var(--superficie-vidro);
+            border: 1px solid var(--borda-ouro);
+            padding: 1.25rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .catalogo-grade {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope">
+        <header>
+            <div class="selo-diamante">
+                <span>✦</span> Apresente um atendimento exclusivo, rápido e personalizado para o seu cliente
+            </div>
+            <h1>Cardápio <span>Exclusivo</span></h1>
+            <p>A redefinição da alta culinária urbana em cada detalhe.</p>
+        </header>
+
+        <main class="catalogo-grade">
+            
+            <!-- PRODUTO 1 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Exclusivo</span>
+                    <img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Trufado">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Trufado</h3>
+                    <p class="produto-ingredientes">Pão brioche artesanal fermentado lentamente, salsicha puríssima suína, emulsão especial de trufas negras, purê de mandioquinha cremoso e crispy de alho-poró.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 48,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Trufado" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 2 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Especial</span>
+                    <img src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Ouro e Bacon">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Ouro & Bacon</h3>
+                    <p class="produto-ingredientes">Pão rústico de longa fermentação, salsicha artesanal defumada em lenha de macieira, fondue de queijo Emmental suíço, bacon crocante e cebola caramelizada.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 54,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Ouro%20&%20Bacon" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 3 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Prestigio</span>
+                    <img src="https://images.unsplash.com/photo-1541214113247-2175ca469794?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Brie e Figo">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Brie & Figo</h3>
+                    <p class="produto-ingredientes">Pão de nozes e castanhas, salsicha de vitela fina, fatia generosa de queijo Brie maçaricado, compota artesanal de figos turcos ao vinho do Porto e brotos frescos.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 59,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Brie%20&%20Figo" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 4 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Artesanal</span>
+                    <img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Gorgonzola e Pera">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Gorgonzola & Pera</h3>
+                    <p class="produto-ingredientes">Pão italiano rústico, salsicha de pernil suíno, creme de queijo Gorgonzola D.O.P., lâminas de pera caramelizadas na manteiga e nozes pecã torradas.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 46,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Gorgonzola%20&%20Pera" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 5 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Seleção do Chef</span>
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Costela Defumada">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Costela Defumada</h3>
+                    <p class="produto-ingredientes">Pão australiano escuro, linguiça artesanal de costela bovina desfiada por 12 horas, molho barbecue rústico da casa, queijo cheddar real derretido e crispy de cebola.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 52,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Costela%20Defumada" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 6 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Mediterrâneo</span>
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Cordeiro com Hortelã">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Cordeiro & Hortelã</h3>
+                    <p class="produto-ingredientes">Pão sírio especial tostado, linguiça artesanal de cordeiro temperada com especiarias árabes, coalhada seca temperada, folhas de hortelã fresca e sumac.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 49,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Cordeiro%20&%20Hortelã" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 7 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Premium</span>
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Salmão Defumado">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Salmão & Cream Cheese</h3>
+                    <p class="produto-ingredientes">Pão macio sovado na manteiga de garrafa, salsicha especial de peixe branco, generosa camada de cream cheese trufado, fatias de salmão norueguês defumado e dill fresco.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 64,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Salmão%20&%20Cream%20Cheese" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 8 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Tradicional de Luxo</span>
+                    <img src="https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Frankfurt Clássico">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Frankfurt Royale</h3>
+                    <p class="produto-ingredientes">Pão francês artesanal de crosta fina, autêntica salsicha alemã Frankfurt de vitela, mostarda antiga com grãos importados, chucrute levemente avinagrado e bacon crocante.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 42,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Frankfurt%20Royale" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 9 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Apimentado</span>
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Chorizo e Jalapeño">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Chorizo & Jalapeño</h3>
+                    <p class="produto-ingredientes">Pão de milho rústico, linguiça tipo chorizo argentino levemente picante, creme de queijo prato artesanal, rodelas de jalapeño fresco e molho chimichurri da casa.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 45,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Chorizo%20&%20Jalapeño" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 10 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Vegetariano</span>
+                    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Cogumelos Portobello">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Portobello Trufado</h3>
+                    <p class="produto-ingredientes">Pão de centeio artesanal, salsicha 100% vegetal à base de grão-de-bico, mix de cogumelos Portobello grelhados na manteiga de ervas, azeite trufado e rúcula selvagem.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 49,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Portobello%20Trufado" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 11 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Italiano</span>
+                    <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Parmegiana">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Parmegiana Nobre</h3>
+                    <p class="produto-ingredientes">Pão ciabatta fresquinho, salsicha de vitela empanada na farinha Panko, molho de tomates rústicos da nonna, queijo Parmesão D.O.P. ralado na hora e manjericão fresco.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 47,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Parmegiana%20Nobre" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 12 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Exótico</span>
+                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Pato com Laranja">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Pato & Laranja</h3>
+                    <p class="produto-ingredientes">Pão de brioche dourado na manteiga clarificada, linguiça artesanal de pato confitadinho, redução agridoce de laranja com gengibre e raspas de siciliano.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 58,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Pato%20&%20Laranja" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTO 13 -->
+            <div class="produto-cartao">
+                <div class="produto-imagem-container">
+                    <span class="produto-etiqueta">Sertanejo Nobre</span>
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80" alt="Cachorro-Quente Carne de Sol e Queijo Coalho">
+                </div>
+                <div class="produto-conteudo">
+                    <h3 class="produto-titulo">Cachorro-Quente Sertanejo Imperial</h3>
+                    <p class="produto-ingredientes">Pão artesanal de milho verde, linguiça de pernil suíno defumada, carne de sol desfiada na manteiga de garrafa, queijo coalho tostado na chapa e melaço de cana.</p>
+                    <div class="produto-rodape">
+                        <span class="produto-preco">R$ 49,90</span>
+                        <a href="https://wa.me/5564935013672?text=acabei%20de%20testar%20o%20cardapio%20digital%20e%20minha%20escolha%20foi%20Cachorro-Quente%20Sertanejo%20Imperial" class="botao-whatsapp" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            Quero Esse
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+            Cardápio Exclusivo • Reservas e Encomendas Privativas via WhatsApp
+        </footer>
+    </div>
+
+</body>
+</html>

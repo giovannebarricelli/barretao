@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barretão 2026 | Concierge Diamond</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-obsidian: #030407;
+            --surface-glass: rgba(15, 18, 26, 0.75);
+            --border-gold: rgba(212, 175, 55, 0.25);
+            --gold-primary: #d4af37;
+            --gold-light: #fff1b0;
+            --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 40%, #aa820a 100%);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 2rem 1.25rem;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 10% 90%, rgba(170, 130, 10, 0.05) 0%, transparent 50%);
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 720px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge-diamond {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-light);
+            padding: 0.5rem 1.4rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        header h1 span {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 15px rgba(212, 175, 55, 0.3));
+        }
+
+        .main-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-gold);
+            border-radius: 28px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.05);
+            position: relative;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .bot-prompt-box {
+            background: linear-gradient(145deg, #0a0c10, #050608);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-left: 3px solid var(--gold-primary);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .bot-prompt-box .subtitle {
+            font-size: 0.75rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+        }
+
+        .bot-prompt-box h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+        }
+
+        .user-selection-feedback {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold-light);
+            padding: 1.15rem 1.5rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.4s ease forwards;
+            letter-spacing: 0.02em;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .option-btn {
+            background: linear-gradient(145deg, #12151d, #0b0d13);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2.25rem 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold-gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .option-btn > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .option-btn .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+        }
+
+        .option-btn .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+            transition: color 0.4s ease;
+        }
+
+        .option-btn .description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.4;
+            transition: color 0.4s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2), inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .option-btn:hover .icon {
+            transform: scale(1.12) translateY(-2px);
+        }
+
+        .option-btn:hover .title {
+            color: #030407;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .option-btn:hover .description {
+            color: #0b0d13;
+            font-weight: 500;
+        }
+
+        .option-btn:hover::before {
+            opacity: 1;
+        }
+
+        .step-section {
+            display: none;
+        }
+
+        .step-section.active {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 680px) {
+            .main-card {
+                padding: 1.75rem;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .option-btn {
+                padding: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <div class="badge-diamond">
+                <span>✦</span> Concierge Diamond • Barretão 2026
+            </div>
+            <h1>Experiência <span>Exclusiva</span></h1>
+        </header>
+
+        <main class="main-card">
+            <div class="chat-container" id="chatContainer">
+                
+                <!-- ETAPA 1 -->
+                <div class="step-section active" id="step1">
+                    <div class="bot-prompt-box">
+                        <div class="subtitle">Atendimento Privativo • Pergunta 1 de 3</div>
+                        <h2>Quantos dias você vai curtir do Barretão?</h2>
+                    </div>
+                    
+                    <div class="user-selection-feedback" id="feedback1"></div>
+
+                    <div class="options-grid" id="grid1">
+                        <button class="option-btn" onclick="handleStep1('Alguns dias específicos')">
+                            <span class="icon">✨</span>
+                            <span class="title">Alguns Dias Específicos</span>
+                            <span class="description">Shows específicos e finais de semana</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="handleStep1('Todos os dias')">
+                            <span class="icon">👑</span>
+                            <span class="title">Todos os Dias</span>
+                            <span class="description">Experiência completa e ilimitada</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ETAPA 2 -->
+                <div class="step-section" id="step2">
+                    <div class="bot-prompt-box">
+                        <div class="subtitle">Atendimento Privativo • Pergunta 2 de 3</div>
+                        <h2>Você já reservou hospedagem para todos os dias?</h2>
+                    </div>
+                    
+                    <div class="user-selection-feedback" id="feedback2"></div>
+
+                    <div class="options-grid" id="grid2">
+                        <button class="option-btn" onclick="handleStep2('Sim, tenho lugar para ficar')">
+                            <span class="icon">🏡</span>
+                            <span class="title">Sim, Tenho Lugar</span>
+                            <span class="description">Hospedagem já garantida</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="handleStep2('Quero ficar mais tempo do que reservei')">
+                            <span class="icon">🔥</span>
+                            <span class="title">Quero Ficar Mais Tempo</span>
+                            <span class="description">Preciso estender minha estadia</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ETAPA 3 -->
+                <div class="step-section" id="step3">
+                    <div class="bot-prompt-box">
+                        <div class="subtitle">Atendimento Privativo • Pergunta 3 de 3</div>
+                        <h2>Se eu te oferecer uma hospedagem de última hora, você ficaria mais tempo?</h2>
+                    </div>
+                    
+                    <div class="user-selection-feedback" id="feedback3"></div>
+
+                    <div class="options-grid" id="grid3">
+                        <button class="option-btn" onclick="handleStep3('Sim')">
+                            <span class="icon">✅</span>
+                            <span class="title">Sim</span>
+                            <span class="description">Com certeza, tenho interesse</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="handleStep3('Não')">
+                            <span class="icon">❌</span>
+                            <span class="title">Não</span>
+                            <span class="description">Apenas o período planejado</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+            <p>Protocolo de Atendimento Reservado</p>
+        </footer>
+    </div>
+
+    <script>
+        const userData = {
+            diasCurtição: '',
+            hospedagemAtual: '',
+            hospedagemExtra: ''
+        };
+
+        function handleStep1(choice) {
+            userData.diasCurtição = choice;
+            
+            const feedback = document.getElementById('feedback1');
+            feedback.textContent = "Seleção: " + choice;
+            feedback.style.display = 'block';
+
+            const grid = document.getElementById('grid1');
+            grid.style.opacity = '0.25';
+            grid.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
+            }, 500);
+        }
+
+        function handleStep2(choice) {
+            userData.hospedagemAtual = choice;
+            
+            const feedback = document.getElementById('feedback2');
+            feedback.textContent = "Seleção: " + choice;
+            feedback.style.display = 'block';
+
+            const grid = document.getElementById('grid2');
+            grid.style.opacity = '0.25';
+            grid.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step3').classList.add('active');
+            }, 500);
+        }
+
+        function handleStep3(choice) {
+            userData.hospedagemExtra = choice;
+            
+            const feedback = document.getElementById('feedback3');
+            feedback.textContent = "Seleção: " + choice;
+            feedback.style.display = 'block';
+
+            const grid = document.getElementById('grid3');
+            grid.style.opacity = '0.25';
+            grid.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                const container = document.getElementById('chatContainer');
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'bot-prompt-box';
+                loadingMsg.style.textAlign = 'center';
+                loadingMsg.style.borderLeftColor = 'var(--gold-primary)';
+                loadingMsg.innerHTML = `
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 0.4rem;">Perfil e preferências mapeados com sucesso.</div>
+                    <div style="font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.05em;">Redirecionando para o seu WhatsApp...</div>
+                `;
+                container.appendChild(loadingMsg);
+
+                const textoMensagem = `Acabei de testar a gamificação e respondi:\n- Quantos dias vai curtir: ${userData.diasCurtição}\n- Hospedagem atual: ${userData.hospedagemAtual}\n- Hospedagem de última hora: ${userData.hospedagemExtra}`;
+                const whatsappMessage = encodeURIComponent(textoMensagem);
+                const whatsappUrl = `https://wa.me/5564935013672?text=${whatsappMessage}`;
+
+                setTimeout(() => {
+                    window.location.href = whatsappUrl; 
+                }, 1600);
+
+            }, 600);
+        }
+    </script>
+</body>
+</html>

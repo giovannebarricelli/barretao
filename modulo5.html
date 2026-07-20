@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Fidelização • Barretão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #07090E;
+            color: #F8FAFC;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fundo com imagem combinando com o Barretão e sobreposição escura elegante */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(7,9,14,0.85) 0%, rgba(7,9,14,0.92) 100%), 
+                        url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        /* Tela Inicial: Máquina de Escrever Cinematográfica */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #07090E;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            cursor: pointer;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #intro-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .typewriter-container {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .typewriter-text {
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            color: #F3E5AB;
+            line-height: 1.5;
+            letter-spacing: 1.2px;
+            border-right: 3px solid #D4AF37;
+            white-space: pre-wrap;
+            display: inline-block;
+        }
+
+        .intro-hint {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse-hint 2s infinite;
+        }
+
+        @keyframes pulse-hint {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Container Principal do Card Único (Oculto inicialmente) */
+        .page-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+        }
+
+        .page-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cartão Glassmorphism Único */
+        .glass-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(18, 24, 38, 0.92);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.75), 0 0 30px rgba(212, 175, 55, 0.08);
+            overflow: hidden;
+            padding: 36px 30px;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .concierge-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #F3E5AB;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .card-subtitle {
+            font-size: 0.88rem;
+            color: #94A3B8;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #CBD5E1;
+            margin-bottom: 8px;
+        }
+
+        .input-ios {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 15px 16px;
+            font-size: 1rem;
+            color: #FFFFFF;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .input-ios::placeholder {
+            color: #64748B;
+        }
+
+        .input-ios:focus {
+            border-color: #D4AF37;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-reserve {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 100%);
+            color: #0B0F17;
+            text-align: center;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.3);
+            margin-top: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-reserve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 35px rgba(212, 175, 55, 0.45);
+            filter: brightness(1.08);
+        }
+
+        .secure-footer {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #94A3B8;
+            margin-top: 20px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tela Inicial: Máquina de Escrever Cinematográfica com exatamente 1 aviso de clique -->
+    <div id="intro-screen" onclick="revelarCard()">
+        <div class="typewriter-container">
+            <span class="typewriter-text" id="typewriter"></span>
+        </div>
+        <div class="intro-hint" id="intro-hint" style="display: none;">[ Clique em qualquer lugar para testar ]</div>
+    </div>
+
+    <!-- Card Único Principal -->
+    <div class="page-container" id="main-content">
+        <div class="glass-container">
+            
+            <div class="card-header">
+                <div class="concierge-badge">✨ Demonstração ao Vivo</div>
+                <h1 class="card-title">Sistema de Fidelização</h1>
+                <p class="card-subtitle">Me fala seu nome e seu WhatsApp abaixo para receber uma demonstração instantânea.</p>
+            </div>
+
+            <form id="demoForm" onsubmit="enviarDemo(event)">
+                <div class="form-group">
+                    <label for="nome">Seu Nome</label>
+                    <input type="text" id="nome" class="input-ios" placeholder="Ex: Roberto Sampaio" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="whatsapp">Seu WhatsApp</label>
+                    <input type="tel" id="whatsapp" class="input-ios" placeholder="Ex: 17 99999-9999" required>
+                </div>
+
+                <button type="submit" class="btn-reserve">
+                    Receber Demonstração Grátis
+                </button>
+            </form>
+
+            <div class="secure-footer">
+                Evolution API &bull; FlowZap Automation
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Efeito Máquina de Escrever com letra grande e exatamente um aviso no final
+        const textoIntro = "Lembre o seu cliente que você existe durante os 10 dias do Barretão!\n\nFaça o teste agora mesmo!";
+        let i = 0;
+        const speed = 45; // Velocidade da digitação em ms
+        const typewriterElement = document.getElementById('typewriter');
+        const introScreen = document.getElementById('intro-screen');
+        const mainContent = document.getElementById('main-content');
+        const introHint = document.getElementById('intro-hint');
+
+        function typeWriter() {
+            if (i < textoIntro.length) {
+                typewriterElement.innerHTML += textoIntro.charAt(i) === '\n' ? '<br>' : textoIntro.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                // Exibe apenas 1 aviso claro para o usuário saber que pode clicar
+                introHint.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(typeWriter, 400);
+        });
+
+        function revelarCard() {
+            introScreen.classList.add('fade-out');
+            mainContent.classList.add('show');
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+            }, 800);
+        }
+
+        function enviarDemo(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+
+            // 1. Cole aqui o link da sua planilha (Webhook do Make/n8n conectado ao Google Sheets)
+            const webhookURL = "https://hook.eu1.make.com/seu-webhook-aqui";
+            
+            // Envio invisível dos dados para a planilha via fetch
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: nome, whatsapp: whatsapp, origem: "Sistema de Fidelização - Barretão" })
+            }).catch(err => console.log('Erro ao salvar na planilha:', err));
+
+            // 2. Número de WhatsApp para onde vai a mensagem de aviso (com DDI e DDD)
+            const meuNumeroWhatsApp = "5517999999999"; 
+            const textoMensagem = "acabei de testar o sistema defidelização obrigado";
+
+            const urlWhatsApp = `https://wa.me/${meuNumeroWhatsApp}?text=${encodeURIComponent(textoMensagem)}`;
+            
+            // Abre o WhatsApp para enviar a mensagem automática para você
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>

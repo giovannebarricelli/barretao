@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Operações - Barretão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Psicologia de Cores Aplicada à Conversão */
+            --bg-color: #07090e;         /* Fundo escuro profundo: transmite seriedade, foco absoluto e sofisticação */
+            --card-bg: #0f141d;
+            --card-border: #1a2230;
+            --accent-gold: #f59e0b;       /* Dourado/Amarelo: estimula o cérebro a focar no valor, riqueza e oportunidades */
+            --accent-green: #059669;      /* Verde Esmeralda: gatilho subconsciente de "transação segura", aprovação e dinheiro/economia */
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 120px; /* Espaço para o botão flutuador inferior */
+        }
+
+        h1, h2, h3, .price-main, .badge-top, .cash-price {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .badge-top {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-gold);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        header h1 span {
+            color: var(--accent-gold);
+        }
+
+        .header-subtext {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 1.5rem auto 0 auto;
+            border-top: 1px solid rgba(245, 158, 11, 0.3);
+            padding-top: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: linear-gradient(180deg, #1e293b 0%, var(--card-bg) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
+        }
+
+        .card:hover::before {
+            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+        }
+
+        .card-content .dor {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .card-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: transparent;
+            color: var(--accent-gold);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 0.9rem 1rem;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+            color: #07090e;
+            border-color: transparent;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+        }
+
+        /* BOTÃO FLUTUANTE INFERIOR ("VER PREÇO") */
+        .floating-trigger-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 9, 14, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--card-border);
+            padding: 1rem;
+            z-index: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-open-pricing {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #07090e;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-open-pricing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        /* JANELA MODAL DE PREÇO (OCULTA POR PADRÃO, ABRE AO CLICAR) */
+        .pricing-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 5, 8, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+
+        .pricing-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pricing-modal-card {
+            background: #0f141d;
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 650px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-modal-overlay.active .pricing-modal-card {
+            transform: translateY(0);
+        }
+
+        .btn-close-modal {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-close-modal:hover {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ef4444;
+        }
+
+        .modal-header {
+            margin-bottom: 1.8rem;
+            text-align: left;
+        }
+
+        .modal-header h4 {
+            font-size: 1.35rem;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .modal-pricing-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-tier-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            gap: 1rem;
+        }
+
+        /* Bloco PIX na Janela */
+        .cash-option-box {
+            background: rgba(5, 150, 105, 0.1);
+            border: 1px solid rgba(5, 150, 105, 0.3);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .cash-label {
+            font-size: 0.7rem;
+            color: #34d399;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.15rem;
+        }
+
+        .cash-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        /* Bloco Parcelado na Janela */
+        .price-anchor-group {
+            text-align: right;
+            width: 100%;
+        }
+
+        .installment-wrapper {
+            display: flex;
+            align-items: baseline;
+            justify-content: flex-end;
+            gap: 0.3rem;
+        }
+
+        .installment-small {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .price-main {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .installment-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-top: 0.2rem;
+            display: block;
+        }
+
+        .btn-fale-conosco {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #07090e;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+        }
+
+        .btn-fale-conosco:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .modal-tier-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            .price-anchor-group {
+                text-align: center;
+            }
+            .installment-wrapper {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <span class="badge-top">Exclusivo para a Temporada do Barretão</span>
+            <h1>Central de Operações de <span>Alta Performance</span></h1>
+            <div class="header-subtext">
+                Garanta que a sua operação aguente o fluxo do Barretão sem perder nenhuma venda para o concorrente.
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Modelo 1 -->
+            <div class="card">
+                <span class="card-number">01</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Filtro de Curioso</span>
+                    <h3>Gamificação e Trilhagem</h3>
+                    <p>Sistema que filtra curioso, trilha quem tem interesse no seu produto e responde as principais dúvidas sobre a sua empresa. O cliente não chega sem saber de nada, sua equipe comercial ganha um tempo enorme, o robô faz o primeiro contato e seu time atende só quem realmente quer comprar.</p>
+                </div>
+                <a href="game.html" class="btn">Testar Agora</a>
+            </div>
+
+            <!-- Modelo 2 -->
+            <div class="card">
+                <span class="card-number">02</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Tira a lentidão do atendimento e do caixa</span>
+                    <h3>Cardápio Digital</h3>
+                    <p>Você apresenta todos os seus produtos ou serviços em um só lugar. O cliente entra, escolhe o produto e o sistema de atendimento vende sozinho.</p>
+                </div>
+                <a href="modulo2.html" class="btn">Testar Agora</a>
+            </div>
+
+            <!-- Modelo 3 -->
+            <div class="card">
+                <span class="card-number">03</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Perca de tempo com dúvidas repetidas para milhares de pessoas</span>
+                    <h3>Tira-Dúvidas Automático</h3>
+                    <p>Seu produto é complexo e tem muitos detalhes? Nós temos um sistema que explica tudo dividido em duas partes (site + robô de atendimento). Sua equipe entra apenas para fechar a venda.</p>
+                </div>
+                <a href="modulo3.html" class="btn">Testar Agora</a>
+            </div>
+
+            <!-- Modelo 4 -->
+            <div class="card">
+                <span class="card-number">04</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Incerteza do fluxo de atendimento</span>
+                    <h3>Pré-Vendas e Reservas</h3>
+                    <p>Tem muito cliente batendo na porta mas você não tem certeza de quantas pessoas vão até você? Nosso sistema garante um agendamento seguro com reserva feita mediante pagamento para você se preparar e saber exatamente quantas pessoas vai atender.</p>
+                </div>
+                <a href="modulo4.html" class="btn">Testar Agora</a>
+            </div>
+
+            <!-- Modelo 5 -->
+            <div class="card">
+                <span class="card-number">05</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Perder o cliente após a primeira compra</span>
+                    <h3>Fidelização e Retenção</h3>
+                    <p>Salva os dados do consumidor e dispara campanhas automatizadas durante os 10 dias de evento, garantindo que ele volte a consumir na sua empresa.</p>
+                </div>
+                <a href="modulo5.html" class="btn">Testar Agora</a>
+            </div>
+
+            <!-- Modelo 6 -->
+            <div class="card">
+                <span class="card-number">06</span>
+                <div class="card-content">
+                    <span class="dor">Dor: Decisões baseadas em achismos</span>
+                    <h3>Pesquisa de Mercado</h3>
+                    <p>Colete dados estratégicos diretamente do público do evento. Trilha comportamentos e gera relatórios mastigados para otimizar suas vendas e estoque.</p>
+                </div>
+                <a href="modulo6.html" class="btn">Testar Agora</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Infraestrutura blindada em alta performance • Powered by Evolution API & FlowZap</p>
+        </footer>
+    </div>
+
+    <!-- BOTÃO FIXO INFERIOR "VER PREÇO" -->
+    <div class="floating-trigger-bar">
+        <button class="btn-open-pricing" id="openPricingBtn">
+            ⚡ Ver Preço e Condições
+        </button>
+    </div>
+
+    <!-- JANELA MODAL DE PREÇO (ABRE AO CLICAR NO BOTÃO) -->
+    <div class="pricing-modal-overlay" id="pricingModal">
+        <div class="pricing-modal-card">
+            <button class="btn-close-modal" id="closeModalBtn">&times;</button>
+            
+            <div class="modal-header">
+                <h4>⚡ Pacote Base (1 Site + Bot Inteligente)</h4>
+                <p>Escolha qualquer template acima. Módulos adicionais: R$ 500,00 cada.</p>
+            </div>
+            
+            <div class="modal-pricing-body">
+                <!-- Caixa de Pix / À Vista (Verde: senso de economia e transação segura) -->
+                <div class="modal-tier-box">
+                    <div class="cash-option-box">
+                        <span class="cash-label">PIX / À Vista (Economia Imediata)</span>
+                        <span class="cash-price">R$ 997,00</span>
+                    </div>
+                </div>
+
+                <!-- Caixa Parcelada (Dourado: clareza e acessibilidade cognitiva) -->
+                <div class="modal-tier-box">
+                    <div class="price-anchor-group">
+                        <div class="installment-wrapper">
+                            <span class="installment-small">12x de</span>
+                            <span class="price-main">125,00</span>
+                        </div>
+                        <span class="installment-detail">Sem juros no cartão de crédito</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de Ação -->
+            <a href="https://wa.me/5564935013672?text=gostei%20do%20preço" class="btn-fale-conosco" target="_blank">Garantir Minha Vaga ➔</a>
+        </div>
+    </div>
+
+    <!-- SCRIPT PARA ABRIR E FECHAR A JANELA DE PREÇO -->
+    <script>
+        const openBtn = document.getElementById('openPricingBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const modal = document.getElementById('pricingModal');
+
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Fecha também se o usuário clicar fora do card do modal
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>

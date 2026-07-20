@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa Especial • Barretos & Churrascaria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #07090E;
+            color: #F8FAFC;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fundo imersivo com atmosfera de Barretos / Churrascaria nobre */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(7,9,14,0.90) 0%, rgba(7,9,14,0.96) 100%), 
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card Glassmorphic de Alta Conversão */
+        .glass-card {
+            background: rgba(18, 24, 38, 0.94);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.08);
+            padding: 32px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Barra de Progresso Gamificada */
+        .progress-container {
+            margin-bottom: 24px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94A3B8;
+            margin-bottom: 8px;
+        }
+
+        .progress-info span:last-child {
+            color: #D4AF37;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E6CA65, #D4AF37);
+            width: 16.6%;
+            border-radius: 6px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Etapas do Quiz */
+        .step-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Promessa Irrecusável (Step 1) */
+        .hook-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: #F3E5AB;
+            margin-bottom: 16px;
+        }
+
+        .hook-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .hook-title span {
+            color: #D4AF37;
+        }
+
+        .hook-description {
+            font-size: 0.92rem;
+            color: #94A3B8;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .question-subtitle {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            margin-bottom: 20px;
+        }
+
+        /* Opções de Escolha Gamificadas (Cards) */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #E2E8F0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-card:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateX(4px);
+        }
+
+        .option-card.selected {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: #D4AF37;
+            color: #F3E5AB;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Campos de Entrada (Inputs iOS Style) */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #CBD5E1;
+            margin-bottom: 6px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            color: #FFFFFF;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .input-field::placeholder {
+            color: #64748B;
+        }
+
+        .input-field:focus {
+            border-color: #D4AF37;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Botões de Ação de Alto Impacto */
+        .btn-primary {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 100%);
+            color: #0B0F17;
+            text-align: center;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(212, 175, 55, 0.4);
+            filter: brightness(1.08);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #1EBE5D 100%);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .btn-whatsapp:hover {
+            box-shadow: 0 14px 30px rgba(37, 211, 102, 0.45);
+        }
+
+        .secure-notice {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748B;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <div class="glass-card">
+            
+            <!-- Barra de Progresso -->
+            <div class="progress-container" id="progressBox">
+                <div class="progress-info">
+                    <span id="stepIndicator">Passo 1 de 6</span>
+                    <span id="stepPercentage">16% Concluído</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+            </div>
+
+            <!-- ETAPA 1: Promessa Irrecusável (Hook Principal) -->
+            <div class="step-content active" id="step-1">
+                <div class="hook-badge">🔥 Oportunidade Exclusiva</div>
+                <h1 class="hook-title">Ganhe um <span>Almoço Grátis</span> na Churrascaria Mais Famosa de Barretos!</h1>
+                <p class="hook-description">
+                    Estamos realizando uma pesquisa rápida sobre comportamento e consumo na cidade. Responda 5 perguntas rápidas, valide seus dados e concorra diretamente a uma experiência gastronômica completa por nossa conta.
+                </p>
+                <button type="button" class="btn-primary" onclick="avancarEtapa(2)">Participar e Concorrer Agora</button>
+            </div>
+
+            <!-- ETAPA 2: Pergunta 1 (Comportamento / Interesse) -->
+            <div class="step-content" id="step-2">
+                <h2 class="question-title">Qual é o seu principal foco ou atividade durante o período de grande movimento em Barretos?</h2>
+                <p class="question-subtitle">Toque na opção que melhor define sua rotina:</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Trabalho / Oportunidade Comercial')">
+                        💼 Trabalho / Oportunidade Comercial <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Turismo / Lazer e Curttição')">
+                        🤠 Turismo / Lazer e Curtição <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Residente (Fico na cidade fugindo do movimento)')">
+                        🏠 Residente (Fico na cidade de boa) <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Aproveito para fazer networking e fechar negócios')">
+                        🤝 Networking / Fechar Negócios <span>➔</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" id="btn-next-2" onclick="avancarEtapa(3)" style="opacity: 0.5; pointer-events: none;">Avançar</button>
+            </div>
+
+            <!-- ETAPA 3: Pergunta 2 (Consumo / Gasto) -->
+            <div class="step-content" id="step-3">
+                <h2 class="question-title">Quando o assunto é gastronomia e boa carne, qual é o seu nível de exigência?</h2>
+                <p class="question-subtitle">Selecione o seu perfil de consumo:</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selecionarOpcao(this, 'exigencia', 'Não dispenso uma churrascaria nobre de jeito nenhum')">
+                        🥩 Não dispenso uma churrascaria nobre <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'exigencia', 'Prefiro praticidade e rapidez no dia a dia')">
+                        🚀 Prefiro praticidade e rapidez no dia a dia <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'exigencia', 'Gosto de descobrir novos restaurantes e experiências')">
+                        🍷 Gosto de descobrir experiências exclusivas <span>➔</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" id="btn-next-3" onclick="avancarEtapa(4)" style="opacity: 0.5; pointer-events: none;">Avançar</button>
+            </div>
+
+            <!-- ETAPA 4: Pergunta 3 (Conectividade / Canais) -->
+            <div class="step-content" id="step-4">
+                <h2 class="question-title">Como você prefere receber ofertas exclusivas e avisos importantes no seu dia a dia?</h2>
+                <p class="question-subtitle">Selecione seu canal favorito:</p>
+                
+                <div class="options-grid">
+                    <div class="option-card" onclick="selecionarOpcao(this, 'canal', 'Mensagens diretas no WhatsApp')">
+                        📱 Mensagens diretas no WhatsApp <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'canal', 'Anúncios e Stories no Instagram')">
+                        📸 Anúncios e Stories no Instagram <span>➔</span>
+                    </div>
+                    <div class="option-card" onclick="selecionarOpcao(this, 'canal', 'Indicação direta de amigos')">
+                        👥 Indicação direta de amigos <span>➔</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" id="btn-next-4" onclick="avancarEtapa(5)" style="opacity: 0.5; pointer-events: none;">Avançar</button>
+            </div>
+
+            <!-- ETAPA 5: Captura de Dados (Curiosidade & Urgência) -->
+            <div class="step-content" id="step-5">
+                <h2 class="question-title">Falta pouco! Onde devemos enviar o resultado do seu almoço grátis?</h2>
+                <p class="question-subtitle">Insira seus dados para gerar o seu bilhete da sorte:</p>
+
+                <div class="input-group">
+                    <label class="input-label" for="inputNome">Seu Nome Completo</label>
+                    <input type="text" id="inputNome" class="input-field" placeholder="Ex: Carlos Eduardo Silva">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="inputWhatsapp">Seu WhatsApp (com DDD)</label>
+                    <input type="tel" id="inputWhatsapp" class="input-field" placeholder="Ex: 17 99999-9999">
+                </div>
+
+                <button type="button" class="btn-primary" onclick="validarCaptura()">Concluir e Ver Bilhete ➔</button>
+            </div>
+
+            <!-- ETAPA 6: Sucesso & Envio Imediato via WhatsApp -->
+            <div class="step-content" id="step-6">
+                <div class="hook-badge">🎉 Resposta Registrada com Sucesso!</div>
+                <h2 class="hook-title" style="font-size: 1.4rem; margin-bottom: 10px;">Tudo pronto, <span id="spanNomeCliente"></span>!</h2>
+                <p class="hook-description" style="margin-bottom: 20px;">
+                    Suas respostas foram processadas e enviadas em tempo real. Clique no botão abaixo para registrar oficialmente sua participação no seu WhatsApp e concorrer ao almoço na churrascaria de Barretos.
+                </p>
+
+                <!-- Botão 1: Enviar direto para o WhatsApp -->
+                <button type="button" class="btn-primary btn-whatsapp" onclick="enviarParaWhatsApp()">
+                    📱 Enviar Respostas para o WhatsApp
+                </button>
+
+                <!-- Botão 2: Concorrer à Churrascaria (Ação extra gamificada) -->
+                <button type="button" class="btn-primary" onclick="confirmarConcurso()" style="background: rgba(255,255,255,0.08); color: #F3E5AB; border: 1px solid rgba(212,175,55,0.4);">
+                    🥩 Validar Concurso Churrascaria
+                </button>
+            </div>
+
+            <div class="secure-footer secure-notice">
+                Pesquisa Segura &bull; Dados Processados em Tempo Real
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Objeto para armazenar as respostas do usuário em tempo real
+        const dadosPesquisa = {
+            foco: "",
+            exigencia: "",
+            canal: "",
+            nome: "",
+            whatsapp: ""
+        };
+
+        function avancarEtapa(proximaEtapa) {
+            // Oculta todas as etapas
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            
+            // Exibe a etapa desejada
+            document.getElementById(`step-${proximaEtapa}`).classList.add('active');
+
+            // Atualiza barra de progresso (6 etapas no total)
+            const porcentagens = ["16%", "33%", "50%", "68%", "84%", "100%"];
+            const titulosProgresso = ["Passo 1 de 6", "Passo 2 de 6", "Passo 3 de 6", "Passo 4 de 6", "Passo 5 de 6", "Concluído"];
+            
+            document.getElementById('progressBar').style.width = porcentagens[proximaEtapa - 1];
+            document.getElementById('stepIndicator').textContent = titulosProgresso[proximaEtapa - 1];
+            document.getElementById('stepPercentage').textContent = `${porcentagens[proximaEtapa - 1]} Concluído`;
+
+            // Se chegou na última etapa, esconde a barra de progresso para dar foco total
+            if (proximaEtapa === 6) {
+                document.getElementById('progressBox').style.display = 'none';
+                document.getElementById('spanNomeCliente').textContent = dadosPesquisa.nome.split(' ')[0];
+            }
+        }
+
+        function selecionarOpcao(elementoCard, chaveDado, valorDado) {
+            // Remove a seleção dos outros cards irmãos
+            const irmaos = elementoCard.parentElement.querySelectorAll('.option-card');
+            irmaos.forEach(c => c.classList.remove('selected'));
+            
+            // Marca o card clicado
+            elementoCard.classList.add('selected');
+            
+            // Salva o dado
+            dadosPesquisa[chaveDado] = valorDado;
+
+            // Libera o botão de avançar correspondente à etapa atual
+            if (chaveDado === 'foco') {
+                const btn = document.getElementById('btn-next-2');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            } else if (chaveDado === 'exigencia') {
+                const btn = document.getElementById('btn-next-3');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            } else if (chaveDado === 'canal') {
+                const btn = document.getElementById('btn-next-4');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function validarCaptura() {
+            const nomeInput = document.getElementById('inputNome').value.trim();
+            const whatsInput = document.getElementById('inputWhatsapp').value.trim();
+
+            if (!nomeInput || nomeInput.length < 3) {
+                alert('Por favor, informe seu nome completo.');
+                return;
+            }
+            if (!whatsInput || whatsInput.length < 8) {
+                alert('Por favor, informe um número de WhatsApp válido.');
+                return;
+            }
+
+            dadosPesquisa.nome = nomeInput;
+            dadosPesquisa.whatsapp = whatsInput;
+
+            // Avança para a tela final de sucesso
+            avancarEtapa(6);
+        }
+
+        function enviarParaWhatsApp() {
+            // Substitua pelo seu número de WhatsApp comercial (com DDI e DDD)
+            const meuNumeroWhatsApp = "5517999999999"; 
+
+            const mensagem = `*📊 NOVA PESQUISA DEMERCADO - BARRETOS*\n\n` +
+                             `👤 *Nome:* ${dadosPesquisa.nome}\n` +
+                             `📱 *WhatsApp:* ${dadosPesquisa.whatsapp}\n\n` +
+                             `🎯 *Foco no Período:* ${dadosPesquisa.foco}\n` +
+                             `🥩 *Perfil Gastronômico:* ${dadosPesquisa.exigencia}\n` +
+                             `📢 *Canal Favorito:* ${dadosPesquisa.canal}\n\n` +
+                             `_Enviado em tempo real pelo sistema de pesquisa gamificado._`;
+
+            const urlWhatsApp = `https://wa.me/${meuNumeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+
+        function confirmarConcurso() {
+            alert('Parabéns, ' + dadosPesquisa.nome.split(' ')[0] + '! Seus dados foram validados com sucesso para o sorteio da churrascaria.');
+            enviarParaWhatsApp();
+        }
+    </script>
+</body>
+</html>
