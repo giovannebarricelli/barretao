@@ -317,7 +317,7 @@
                     <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Trabalho / Oportunidade Comercial')">
                         💼 Trabalho / Oportunidade Comercial <span>➔</span>
                     </div>
-                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Turismo / Lazer e Curttição')">
+                    <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Turismo / Lazer e Curtição')">
                         🤠 Turismo / Lazer e Curtição <span>➔</span>
                     </div>
                     <div class="option-card" onclick="selecionarOpcao(this, 'foco', 'Residente (Fico na cidade fugindo do movimento)')">
@@ -492,16 +492,10 @@
         }
 
         function enviarParaWhatsApp() {
-            // Substitua pelo seu número de WhatsApp comercial (com DDI e DDD)
-            const meuNumeroWhatsApp = "5517999999999"; 
+            // Número especificado para envio da mensagem
+            const meuNumeroWhatsApp = "5564935013672"; 
 
-            const mensagem = `*📊 NOVA PESQUISA DEMERCADO - BARRETOS*\n\n` +
-                             `👤 *Nome:* ${dadosPesquisa.nome}\n` +
-                             `📱 *WhatsApp:* ${dadosPesquisa.whatsapp}\n\n` +
-                             `🎯 *Foco no Período:* ${dadosPesquisa.foco}\n` +
-                             `🥩 *Perfil Gastronômico:* ${dadosPesquisa.exigencia}\n` +
-                             `📢 *Canal Favorito:* ${dadosPesquisa.canal}\n\n` +
-                             `_Enviado em tempo real pelo sistema de pesquisa gamificado._`;
+            const mensagem = "quero o modelo 6";
 
             const urlWhatsApp = `https://wa.me/${meuNumeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
             window.open(urlWhatsApp, '_blank');

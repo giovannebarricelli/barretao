@@ -338,22 +338,22 @@
                 <div class="step-section" id="step3">
                     <div class="bot-prompt-box">
                         <div class="subtitle">Atendimento Privativo • Pergunta 3 de 3</div>
-                        <h2>Se eu te oferecer uma hospedagem de última hora, você ficaria mais tempo?</h2>
+                        <h2>Qual modelo de site de atendimento você deseja para o seu negócio?</h2>
                     </div>
                     
                     <div class="user-selection-feedback" id="feedback3"></div>
 
                     <div class="options-grid" id="grid3">
-                        <button class="option-btn" onclick="handleStep3('Sim')">
-                            <span class="icon">✅</span>
-                            <span class="title">Sim</span>
-                            <span class="description">Com certeza, tenho interesse</span>
+                        <button class="option-btn" onclick="handleStep3('Quero o Modelo 1')">
+                            <span class="icon">💻</span>
+                            <span class="title">Modelo 1</span>
+                            <span class="description">Atendimento ágil e automatizado</span>
                         </button>
                         
-                        <button class="option-btn" onclick="handleStep3('Não')">
-                            <span class="icon">❌</span>
-                            <span class="title">Não</span>
-                            <span class="description">Apenas o período planejado</span>
+                        <button class="option-btn" onclick="handleStep3('Quero o Modelo 2')">
+                            <span class="icon">🚀</span>
+                            <span class="title">Modelo 2</span>
+                            <span class="description">Robô humanizado avançado</span>
                         </button>
                     </div>
                 </div>
@@ -370,7 +370,7 @@
         const userData = {
             diasCurtição: '',
             hospedagemAtual: '',
-            hospedagemExtra: ''
+            modeloEscolhido: ''
         };
 
         function handleStep1(choice) {
@@ -408,7 +408,7 @@
         }
 
         function handleStep3(choice) {
-            userData.hospedagemExtra = choice;
+            userData.modeloEscolhido = choice; // 'Quero o Modelo 1' ou 'Quero o Modelo 2'
             
             const feedback = document.getElementById('feedback3');
             feedback.textContent = "Seleção: " + choice;
@@ -425,13 +425,13 @@
                 loadingMsg.style.textAlign = 'center';
                 loadingMsg.style.borderLeftColor = 'var(--gold-primary)';
                 loadingMsg.innerHTML = `
-                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 0.4rem;">Perfil e preferências mapeados com sucesso.</div>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 0.4rem;">Perfil mapeado com sucesso!</div>
                     <div style="font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.05em;">Redirecionando para o seu WhatsApp...</div>
                 `;
                 container.appendChild(loadingMsg);
 
-                const textoMensagem = `Acabei de testar a gamificação e respondi:\n- Quantos dias vai curtir: ${userData.diasCurtição}\n- Hospedagem atual: ${userData.hospedagemAtual}\n- Hospedagem de última hora: ${userData.hospedagemExtra}`;
-                const whatsappMessage = encodeURIComponent(textoMensagem);
+                // Dispara exatamente a mensagem solicitada para o webhook da Evolution API capturar
+                const whatsappMessage = encodeURIComponent(userData.modeloEscolhido);
                 const whatsappUrl = `https://wa.me/5564935013672?text=${whatsappMessage}`;
 
                 setTimeout(() => {
