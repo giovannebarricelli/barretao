@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blindagem Comercial Barretão 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-slate-950 text-white">
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="barretao.jpeg" alt="Festa do Peão Barretos" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-slate-950/85"></div>
+        </div>
+        <div class="relative z-10 w-full max-w-2xl">
+            <h1 class="font-black mb-12 leading-tight text-white uppercase tracking-tight">
+                <span class="text-3xl md:text-5xl block mb-2">Barretão 2026:</span>
+                <span id="counter" class="text-[#E31D1D] text-6xl md:text-9xl block my-4">99.000</span> 
+                <span class="text-2xl md:text-4xl block mb-6">De pessoas na cidade.</span>
+                <span class="text-white text-3xl md:text-5xl block">O seu atendimento vai aguentar?</span>
+            </h1>
+            <div class="flex flex-col gap-5">
+                <a href="#solucao" class="block w-full bg-[#16a34a] hover:bg-green-600 text-white py-7 rounded-full font-bold text-xl shadow-lg transition">Estou acreditando no meu potencial</a>
+                <a href="#solucao" class="block w-full bg-[#E31D1D] hover:bg-red-800 text-white py-7 rounded-full font-bold text-xl shadow-lg transition">Minha equipe não dá conta</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEÇÃO GRÁFICO -->
+    <section id="solucao" class="py-24 px-4 bg-white text-slate-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black mb-12 text-center uppercase tracking-tighter">O efeito barretão!</h2>
+            <div class="p-6 bg-slate-50 rounded-2xl shadow-inner border border-slate-100">
+                <canvas id="verticalChart" class="w-full h-[400px]"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLACA 3D -->
+    <div class="relative z-20 flex justify-center -mt-16">
+        <div class="bg-[#16a34a] py-6 px-12 md:px-20 rounded-2xl shadow-[0_20px_50px_rgba(22,163,74,0.3)] border-b-8 border-r-8 border-green-800">
+            <h3 class="text-2xl md:text-4xl font-black uppercase text-white tracking-widest">Nossa Solução</h3>
+        </div>
+    </div>
+
+    <!-- SEÇÃO EXTRAIA O OURO -->
+    <section class="py-32 px-4 bg-slate-950 text-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-6xl font-black mb-20 text-center uppercase tracking-tighter">Extraia o ouro do Barretão 2026</h2>
+            <div class="grid md:grid-cols-[1fr,auto,1fr] gap-8 items-center">
+                <div class="h-full flex flex-col bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-10 shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-4">Site de Atendimento</h3>
+                    <p class="text-slate-400 text-lg flex-grow">Vitrine digital de alta performance para capturar leads antes do primeiro contato.</p>
+                </div>
+                <div class="hidden md:flex justify-center"><div class="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-4xl font-black text-white">+</div></div>
+                <div class="h-full flex flex-col bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-10 shadow-2xl">
+                    <h3 class="text-3xl font-bold mb-4">Robô Humanizado</h3>
+                    <p class="text-slate-400 text-lg flex-grow">Inteligência que resolve o fluxo bruto e entrega o fechamento de venda no automático.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: SIMULADOR GAMIFICADO -->
+    <section class="py-24 px-4 bg-slate-900 text-white">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter">Teste seu site de atendimento!</h2>
+            <p class="text-slate-400 text-lg mb-12 italic">Responda as perguntas e veja como nosso sistema blinda o seu atendimento contra o caos.</p>
+            <div id="game-container" class="bg-slate-800 p-8 md:p-12 rounded-[2rem] border border-slate-700 shadow-2xl">
+                <div id="q1">
+                    <h3 class="text-2xl font-bold mb-8">1. Quantas pessoas tem na sua equipe de atendimento?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="saveAndNext('q1', 'q2', 'Menos de 5')" class="bg-[#E31D1D] hover:bg-red-800 p-6 rounded-2xl font-black text-xl transition">Menos de 5</button>
+                        <button onclick="saveAndNext('q1', 'q2', 'Mais de 5')" class="bg-[#16a34a] hover:bg-green-700 p-6 rounded-2xl font-black text-xl transition">Mais de 5</button>
+                    </div>
+                </div>
+                <div id="q2" class="hidden">
+                    <h3 class="text-2xl font-bold mb-8">2. Você pretende contratar mais pessoas para a Festa do Peão?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="saveAndNext('q2', 'q3', 'Sim')" class="bg-[#16a34a] hover:bg-green-700 p-6 rounded-2xl font-black text-xl transition">Sim</button>
+                        <button onclick="saveAndNext('q2', 'q3', 'Não')" class="bg-[#E31D1D] hover:bg-red-800 p-6 rounded-2xl font-black text-xl transition">Não</button>
+                    </div>
+                </div>
+                <div id="q3" class="hidden">
+                    <h3 class="text-2xl font-bold mb-8">3. Se demorar mais de 30 min, o cliente:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="sendToWhatsApp('Fica esperando')" class="bg-[#16a34a] hover:bg-green-700 p-6 rounded-2xl font-black text-xl transition">Fica esperando</button>
+                        <button onclick="sendToWhatsApp('Vai embora para o concorrente')" class="bg-[#E31D1D] hover:bg-red-800 p-6 rounded-2xl font-black text-xl transition">Vai embora para o concorrente</button>
+                    </div>
+                </div>
+                <div id="result-box" class="hidden">
+                    <h3 class="text-3xl font-black text-green-400 mb-6">Enviando análise para seu WhatsApp...</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUEBRA DE OBJEÇÕES -->
+    <section class="py-24 px-4 bg-white text-slate-950">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl md:text-6xl font-black uppercase text-center mb-4 tracking-tighter">Sua infraestrutura de elite</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 border-2 border-slate-900 rounded-3xl hover:bg-slate-50 transition"><h3 class="text-2xl font-black mb-3">Pague após o Barretão</h3><p class="text-slate-600">Sua operação já terá lucrado. O sistema se paga com o resultado gerado.</p></div>
+                <div class="p-8 border-2 border-slate-900 rounded-3xl hover:bg-slate-50 transition"><h3 class="text-2xl font-black mb-3">12x Sem Juros</h3><p class="text-slate-600">Neutralizamos a dor do pagamento. Investimento diluído para você acessar agora.</p></div>
+                <div class="p-8 border-2 border-slate-900 rounded-3xl hover:bg-slate-50 transition"><h3 class="text-2xl font-black mb-3">Atendimento Presencial</h3><p class="text-slate-600">Segurança física e jurídica. Estamos onde você está, sem intermediários.</p></div>
+                <div class="p-8 border-2 border-slate-900 rounded-3xl hover:bg-slate-50 transition"><h3 class="text-2xl font-black mb-3">Contrato Blindado</h3><p class="text-slate-600">Total transparência. Seus direitos protegidos em cada etapa.</p></div>
+                <div class="md:col-span-2 p-10 bg-[#E31D1D] text-white rounded-3xl text-center"><h3 class="text-3xl font-black mb-4">Suporte 24h durante os 10 dias</h3><p class="text-lg opacity-90">Plantão absoluto para garantir 100% de performance no pico do evento.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: RECEBA SEU ESQUELETO -->
+    <section class="py-24 px-4 bg-slate-950 text-center">
+        <div class="max-w-3xl mx-auto bg-white p-10 rounded-[2rem] text-slate-900">
+            <h2 class="text-4xl font-black uppercase mb-6">Receba agora mesmo o seu esqueleto de atendimento!</h2>
+            <p class="text-lg text-slate-600 mb-10">Precisamos mapear o seu fluxo de atendimento antes de implementar o robô. Só assim garantimos que cada lead seja tratado com máxima eficiência.</p>
+            <a href="https://wa.me/5564935013672?text=Quero%20receber%20meu%20esqueleto%20de%20atendimento" class="block w-full bg-[#E31D1D] hover:bg-red-800 text-white py-6 rounded-2xl font-black text-xl shadow-xl transition transform hover:scale-105">RECEBER MEU ROBO DE ATENDIMENTO</a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: CONTAGEM REGRESSIVA E EVENTOS -->
+    <section class="py-20 px-4 bg-[#E31D1D] text-white text-center">
+        <h2 class="text-3xl md:text-5xl font-black uppercase mb-8">Nosso tempo está correndo...</h2>
+        <div id="timer" class="text-5xl md:text-7xl font-black tracking-tighter mb-10">00:00:00:00</div>
+        
+        <h3 class="text-2xl font-bold mb-8 uppercase">Eventos nacionais que estamos presentes:</h3>
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-4 mb-12">
+            <div class="overflow-hidden rounded-2xl h-64 border-4 border-white/20"><img src="caldas-country.jpg" alt="Caldas Country" class="w-full h-full object-cover"></div>
+            <div class="overflow-hidden rounded-2xl h-64 border-4 border-white/20"><img src="carnaval-salvador.jpg" alt="Carnaval Salvador" class="w-full h-full object-cover"></div>
+            <div class="overflow-hidden rounded-2xl h-64 border-4 border-white/20"><img src="lollapalooza.jpg" alt="Lollapalooza" class="w-full h-full object-cover"></div>
+            <div class="overflow-hidden rounded-2xl h-64 border-4 border-white/20"><img src="parintins.jpg" alt="Festival de Parintins" class="w-full h-full object-cover"></div>
+            <div class="overflow-hidden rounded-2xl h-64 border-4 border-white/20"><img src="rock-in-rio.jpg" alt="Rock in Rio" class="w-full h-full object-cover"></div>
+        </div>
+        <a href="exemplo.html" class="inline-block bg-white text-[#E31D1D] px-8 py-3 rounded-full font-bold text-sm uppercase hover:bg-gray-100 transition shadow-lg">Ver modelos no catálogo</a>
+    </section>
+
+    <!-- RODAPÉ PROFISSIONAL -->
+    <footer class="py-16 px-4 bg-[#0a0a0a] border-t border-slate-900 text-slate-400">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+                <h4 class="text-white font-black text-xl mb-6 uppercase tracking-tight">Flow Corporação</h4>
+                <p class="mb-4">Marketing, Publicidade e Soluções em Automação de Alta Performance.</p>
+                <p class="text-sm">Barretos - SP | Referência nacional em tecnologia para eventos.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-xl mb-6 uppercase tracking-tight">Recursos</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="hover:text-[#E31D1D] transition">Termos de Uso</a></li>
+                    <li><a href="#" class="hover:text-[#E31D1D] transition">Política de Privacidade</a></li>
+                    <li><a href="#" class="hover:text-[#E31D1D] transition">Central de Suporte</a></li>
+                    <li><a href="exemplo.html" class="hover:text-[#E31D1D] transition">Catálogo de Modelos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-black text-xl mb-6 uppercase tracking-tight">Contato</h4>
+                <div class="space-y-3">
+                    <p>Atendimento Comercial:</p>
+                    <a href="https://wa.me/5564935013672" class="text-white font-bold hover:text-[#16a34a] transition block">+55 64 93501-3672</a>
+                    <p class="text-sm">Disponível 24/7 durante o Barretão 2026</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-slate-900 text-center">
+            <p class="text-sm uppercase tracking-widest">Flow Corporação Marketing e Publicidade © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateTimer() {
+            const targetDate = new Date('August 20, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('timer').innerText = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        let answers = {};
+        function saveAndNext(current, next, val) {
+            answers[current] = val;
+            document.getElementById(current).classList.add('hidden');
+            document.getElementById(next).classList.remove('hidden');
+        }
+        function sendToWhatsApp(val) {
+            answers['q3'] = val;
+            const msg = `Acabei de testar o site! Respostas dadas: 1.${answers.q1}, 2.${answers.q2}, 3.${answers.q3}`;
+            const url = `https://wa.me/5564935013672?text=${encodeURIComponent(msg)}`;
+            document.getElementById('q3').classList.add('hidden');
+            document.getElementById('result-box').classList.remove('hidden');
+            setTimeout(() => { window.location.href = url; }, 1000);
+        }
+        
+        function animateCounter() {
+            const counter = document.getElementById('counter');
+            let count = 99000;
+            const timer = setInterval(() => {
+                count += 25000;
+                if (count >= 1000000) { counter.innerText = "1 MILHÃO"; clearInterval(timer); }
+                else { counter.innerText = Math.floor(count).toLocaleString('pt-BR'); }
+            }, 50);
+        }
+        window.onload = animateCounter;
+
+        new Chart(document.getElementById('verticalChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'AGO (BARRETÃO)', 'Set', 'Out', 'Nov', 'Dez'],
+                datasets: [{
+                    data: [120, 110, 130, 125, 115, 140, 135, 550, 125, 130, 125, 140],
+                    backgroundColor: ['#64748b', '#64748b', '#64748b', '#64748b', '#64748b', '#64748b', '#64748b', '#E31D1D', '#64748b', '#64748b', '#64748b', '#64748b'],
+                    borderRadius: 6
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false } } }
+        });
+    </script>
+</body>
+</html>
