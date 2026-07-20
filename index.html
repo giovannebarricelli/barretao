@@ -119,14 +119,36 @@
         <div class="max-w-3xl mx-auto bg-white p-10 rounded-[2rem] text-slate-900">
             <h2 class="text-4xl font-black uppercase mb-6">Receba agora mesmo o seu esqueleto de atendimento!</h2>
             <p class="text-lg text-slate-600 mb-10">Precisamos mapear o seu fluxo de atendimento antes de implementar o robô. Só assim garantimos que cada lead seja tratado com máxima eficiência.</p>
-            <a href="https://wa.me/5564935013672?text=Quero%20receber%20meu%20esqueleto%20de%20atendimento" class="block w-full bg-[#E31D1D] hover:bg-red-800 text-white py-6 rounded-2xl font-black text-xl shadow-xl transition transform hover:scale-105">RECEBER MEU ROBO DE ATENDIMENTO</a>
+            <a href="https://wa.me/5564935013672?text=Gostaria%20de%20conhecer%20o%20sistema%20de%20atendimento%20de%20voc%C3%AAs." class="block w-full bg-[#E31D1D] hover:bg-red-800 text-white py-6 rounded-2xl font-black text-xl shadow-xl transition transform hover:scale-105">QUERO MEU ROBO DE ATENDIMENTO</a>
         </div>
     </section>
 
-    <!-- SEÇÃO: CONTAGEM REGRESSIVA E EVENTOS (COM CARROSSEL NO MOBILE) -->
+    <!-- SEÇÃO: CONTAGEM REGRESSIVA E EVENTOS (COM RÓTULOS NO CRONÔMETRO) -->
     <section class="py-20 px-4 bg-[#E31D1D] text-white text-center">
         <h2 class="text-3xl md:text-5xl font-black uppercase mb-8">Nosso tempo está correndo...</h2>
-        <div id="timer" class="text-5xl md:text-7xl font-black tracking-tighter mb-10">00:00:00:00</div>
+        
+        <!-- Cronômetro estruturado com rótulos individuais -->
+        <div class="flex justify-center items-center gap-2 md:gap-6 mb-10">
+            <div class="flex flex-col items-center">
+                <span id="days" class="text-4xl md:text-7xl font-black tracking-tighter">00</span>
+                <span class="text-xs md:text-sm uppercase font-bold tracking-widest opacity-80 mt-1">Dias</span>
+            </div>
+            <span class="text-4xl md:text-7xl font-black pb-4">:</span>
+            <div class="flex flex-col items-center">
+                <span id="hours" class="text-4xl md:text-7xl font-black tracking-tighter">00</span>
+                <span class="text-xs md:text-sm uppercase font-bold tracking-widest opacity-80 mt-1">Horas</span>
+            </div>
+            <span class="text-4xl md:text-7xl font-black pb-4">:</span>
+            <div class="flex flex-col items-center">
+                <span id="minutes" class="text-4xl md:text-7xl font-black tracking-tighter">00</span>
+                <span class="text-xs md:text-sm uppercase font-bold tracking-widest opacity-80 mt-1">Minutos</span>
+            </div>
+            <span class="text-4xl md:text-7xl font-black pb-4">:</span>
+            <div class="flex flex-col items-center">
+                <span id="seconds" class="text-4xl md:text-7xl font-black tracking-tighter">00</span>
+                <span class="text-xs md:text-sm uppercase font-bold tracking-widest opacity-80 mt-1">Segundos</span>
+            </div>
+        </div>
         
         <h3 class="text-2xl font-bold mb-8 uppercase">Eventos nacionais que estamos presentes:</h3>
         
@@ -221,7 +243,11 @@
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('timer').innerText = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
         }
         setInterval(updateTimer, 1000);
         updateTimer();
@@ -257,8 +283,7 @@
             document.getElementById(next).classList.remove('hidden');
         }
         function sendToWhatsApp(val) {
-            answers['q3'] = val;
-            const msg = `Acabei de testar o site! Respostas dadas: 1.${answers.q1}, 2.${answers.q2}, 3.${answers.q3}`;
+            const msg = "Gostaria de conhecer o sistema de atendimento de vocês.";
             const url = `https://wa.me/5564935013672?text=${encodeURIComponent(msg)}`;
             document.getElementById('q3').classList.add('hidden');
             document.getElementById('result-box').classList.remove('hidden');
